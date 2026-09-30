@@ -26,3 +26,6 @@ Only ever connects to hosts you explicitly list — it's an auditor, not a scann
 ## License
 
 MIT, see [LICENSE](LICENSE).
+
+---
+maintained · verified 2026-09-30
