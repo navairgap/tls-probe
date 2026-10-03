@@ -29,3 +29,14 @@ MIT, see [LICENSE](LICENSE).
 
 ---
 maintained · verified 2026-09-30
+
+## Sample output
+
+```
+$ python3 tls_probe.py example.com
+protocol  : TLSv1.3
+cipher    : TLS_AES_256_GCM_SHA384
+cert      : CN=example.com (expires 2027-01-15)
+flags     : HSTS · OCSP stapling
+weakness  : accepts TLSv1.0 on port 443 — recommend disabling
+```
