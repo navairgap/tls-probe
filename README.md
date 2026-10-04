@@ -40,3 +40,11 @@ cert      : CN=example.com (expires 2027-01-15)
 flags     : HSTS · OCSP stapling
 weakness  : accepts TLSv1.0 on port 443 — recommend disabling
 ```
+
+## FAQ
+
+**Why is TLS 1.3 early data not reported?**
+Early data (0-RTT) is only observable when the client offers it; most browsers don't against new servers. The probe flags it when seen.
+
+**Does it grade like SSL Labs?**
+No — it reports raw facts. Grading is opinion; facts are not.
