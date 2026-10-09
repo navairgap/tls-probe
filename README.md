@@ -58,3 +58,8 @@ Runs the unittest suite on 3.9–3.12 on every push. The probe has no network-de
 ## Exit codes
 
 `0` all checks parsed cleanly. `1` host unreachable or handshake failed. `2` certificate unparseable. script against them freely.
+
+
+## Requirements
+
+python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS itself.
