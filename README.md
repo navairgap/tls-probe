@@ -53,3 +53,8 @@ No — it reports raw facts. Grading is opinion; facts are not.
 ## CI
 
 Runs the unittest suite on 3.9–3.12 on every push. The probe has no network-dependent tests — everything is mocked, so CI is hermetic.
+
+
+## Exit codes
+
+`0` all checks parsed cleanly. `1` host unreachable or handshake failed. `2` certificate unparseable. script against them freely.
