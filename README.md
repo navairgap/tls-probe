@@ -70,3 +70,10 @@ python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS its
 - **OCSP stapling** — the server attaching proof the cert is still valid
 - **HSTS** — the server insisting on HTTPS forever
 - **forward secrecy** — old traffic stays safe even if the key leaks later
+
+## Glossary
+
+- **cipher suite** — the negotiated encryption recipe for a connection
+- **OCSP stapling** — the server attaching proof the cert is still valid
+- **HSTS** — the server insisting on HTTPS forever
+- **forward secrecy** — old traffic stays safe even if the key leaks later
