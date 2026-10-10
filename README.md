@@ -63,3 +63,10 @@ Runs the unittest suite on 3.9–3.12 on every push. The probe has no network-de
 ## Requirements
 
 python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS itself.
+
+## Glossary
+
+- **cipher suite** — the negotiated encryption recipe for a connection
+- **OCSP stapling** — the server attaching proof the cert is still valid
+- **HSTS** — the server insisting on HTTPS forever
+- **forward secrecy** — old traffic stays safe even if the key leaks later
