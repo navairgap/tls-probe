@@ -81,3 +81,7 @@ python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS its
 ## Debugging TLS
 
 `openssl s_client -connect host:443 -showcerts` shows the handshake; the probe shows it *scriptably* — version, cipher, chain, weaknesses as structured output you can diff and alert on. use s_client to explore, the probe to monitor.
+
+## Adding a check
+
+checks live in the handshake parser: each extension gets a small function returning findings. add it, register in the check table, add a fixture capture to the test corpus.
