@@ -77,3 +77,7 @@ python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS its
 - **OCSP stapling** — the server attaching proof the cert is still valid
 - **HSTS** — the server insisting on HTTPS forever
 - **forward secrecy** — old traffic stays safe even if the key leaks later
+
+## Debugging TLS
+
+`openssl s_client -connect host:443 -showcerts` shows the handshake; the probe shows it *scriptably* — version, cipher, chain, weaknesses as structured output you can diff and alert on. use s_client to explore, the probe to monitor.
