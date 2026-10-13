@@ -85,3 +85,7 @@ python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS its
 ## Adding a check
 
 checks live in the handshake parser: each extension gets a small function returning findings. add it, register in the check table, add a fixture capture to the test corpus.
+
+## Compatibility
+
+openssl 1.1 vs 3.x differ in extension ordering; the probe parses what is on the wire, so library versions don't matter. tested against endpoints up to TLS 1.3 with post-handshake auth extensions present.
