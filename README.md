@@ -89,3 +89,7 @@ checks live in the handshake parser: each extension gets a small function return
 ## Compatibility
 
 openssl 1.1 vs 3.x differ in extension ordering; the probe parses what is on the wire, so library versions don't matter. tested against endpoints up to TLS 1.3 with post-handshake auth extensions present.
+
+## Debugging the probe
+
+re-run with `--verbose` to see the raw extension list per handshake; parse failures name the byte offset they choked on — attach that line to a bug report and the fix is usually fast.
