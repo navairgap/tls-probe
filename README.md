@@ -93,3 +93,7 @@ openssl 1.1 vs 3.x differ in extension ordering; the probe parses what is on the
 ## Debugging the probe
 
 re-run with `--verbose` to see the raw extension list per handshake; parse failures name the byte offset they choked on — attach that line to a bug report and the fix is usually fast.
+
+## Security posture
+
+the probe is read-only: it connects, handshakes, reads, closes. it never writes to the target, needs no privileges, and keeps no state between runs.
