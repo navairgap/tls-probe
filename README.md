@@ -97,3 +97,7 @@ re-run with `--verbose` to see the raw extension list per handshake; parse failu
 ## Security posture
 
 the probe is read-only: it connects, handshakes, reads, closes. it never writes to the target, needs no privileges, and keeps no state between runs.
+
+## History
+
+born from a cert-expiry incident that a monitoring dashboard had rendered invisible. the first version only printed expiry dates; the inspection grew from every 'why did that handshake fail' that followed.
