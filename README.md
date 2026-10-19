@@ -1,103 +1,44 @@
 # tls-probe
 
-Grade the TLS configuration of your own services
+A planned CLI for inspecting TLS configuration on explicitly selected services.
 
-> 🚧 **Status: planning** — architecture and README first, code next.
+> **Status: design stage.** This repository currently contains documentation only; the probe and its tests are not implemented yet.
 
-## Why
+## Goal
 
-TLS is easy to get wrong: old protocols, weak ciphers, expiring certs. tls-probe connects to your own services and grades them like SSL Labs does — but entirely local and scriptable.
+Collect useful, scriptable facts about a TLS connection so an operator can spot outdated protocol support, certificate problems, and unexpected handshake behavior.
 
-## Planned features
+## Proposed output
 
-- Scan your services for protocol/cipher weaknesses
-- Certificate expiry tracking with advance warnings
-- A–F grading with concrete fix commands
-- JSON output for cron + dashboards
+The initial version should report:
 
-## Stack
+- negotiated TLS version and cipher suite;
+- certificate subject, issuer, validity dates, and chain validation result;
+- connection and handshake errors with actionable context;
+- stable JSON output for scripts and monitoring.
 
-`python` `ssl` `cryptography`
+The tool should report observations rather than invent a single universal A–F grade.
 
-## Notes
+## Safety and scope
 
-Only ever connects to hosts you explicitly list — it's an auditor, not a scanner.
+- Connect only to hostnames and ports explicitly supplied by the operator.
+- Use connection timeouts and bounded retries.
+- Validate certificates by default; any diagnostic bypass must be explicit and clearly marked insecure.
+- Never send credentials, modify the remote service, or scan unrelated hosts.
+- Treat DNS, routing, server configuration, and the local trust store as separate possible causes of failure.
+
+## Planned milestones
+
+- [ ] Define CLI arguments and stable exit codes.
+- [ ] Add unit tests for certificate parsing using local fixtures.
+- [ ] Implement a standard-library TLS handshake path.
+- [ ] Add JSON output and certificate-expiry reporting.
+- [ ] Document limitations and platform compatibility.
+
+## Development
+
+The test suite should be hermetic: unit tests must not require public internet access or depend on a third-party TLS endpoint. Integration checks, if added, should be opt-in.
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
-
----
-maintained · verified 2026-09-30
-
-## Sample output
-
-```
-$ python3 tls_probe.py example.com
-protocol  : TLSv1.3
-cipher    : TLS_AES_256_GCM_SHA384
-cert      : CN=example.com (expires 2027-01-15)
-flags     : HSTS · OCSP stapling
-weakness  : accepts TLSv1.0 on port 443 — recommend disabling
-```
-
-## FAQ
-
-**Why is TLS 1.3 early data not reported?**
-Early data (0-RTT) is only observable when the client offers it; most browsers don't against new servers. The probe flags it when seen.
-
-**Does it grade like SSL Labs?**
-No — it reports raw facts. Grading is opinion; facts are not.
-
-
-## CI
-
-Runs the unittest suite on 3.9–3.12 on every push. The probe has no network-dependent tests — everything is mocked, so CI is hermetic.
-
-
-## Exit codes
-
-`0` all checks parsed cleanly. `1` host unreachable or handshake failed. `2` certificate unparseable. script against them freely.
-
-
-## Requirements
-
-python 3.9+, nothing else. no openssl binary needed — the probe speaks TLS itself.
-
-## Glossary
-
-- **cipher suite** — the negotiated encryption recipe for a connection
-- **OCSP stapling** — the server attaching proof the cert is still valid
-- **HSTS** — the server insisting on HTTPS forever
-- **forward secrecy** — old traffic stays safe even if the key leaks later
-
-## Glossary
-
-- **cipher suite** — the negotiated encryption recipe for a connection
-- **OCSP stapling** — the server attaching proof the cert is still valid
-- **HSTS** — the server insisting on HTTPS forever
-- **forward secrecy** — old traffic stays safe even if the key leaks later
-
-## Debugging TLS
-
-`openssl s_client -connect host:443 -showcerts` shows the handshake; the probe shows it *scriptably* — version, cipher, chain, weaknesses as structured output you can diff and alert on. use s_client to explore, the probe to monitor.
-
-## Adding a check
-
-checks live in the handshake parser: each extension gets a small function returning findings. add it, register in the check table, add a fixture capture to the test corpus.
-
-## Compatibility
-
-openssl 1.1 vs 3.x differ in extension ordering; the probe parses what is on the wire, so library versions don't matter. tested against endpoints up to TLS 1.3 with post-handshake auth extensions present.
-
-## Debugging the probe
-
-re-run with `--verbose` to see the raw extension list per handshake; parse failures name the byte offset they choked on — attach that line to a bug report and the fix is usually fast.
-
-## Security posture
-
-the probe is read-only: it connects, handshakes, reads, closes. it never writes to the target, needs no privileges, and keeps no state between runs.
-
-## History
-
-born from a cert-expiry incident that a monitoring dashboard had rendered invisible. the first version only printed expiry dates; the inspection grew from every 'why did that handshake fail' that followed.
+MIT. See [LICENSE](LICENSE).
