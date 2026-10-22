@@ -42,3 +42,8 @@ The test suite should be hermetic: unit tests must not require public internet a
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+
+## Output compatibility
+
+Keep machine-readable output stable and send diagnostics to stderr. Distinguish connection failures from certificate-validation failures, represent unavailable values explicitly, and keep certificate validation enabled by default.
