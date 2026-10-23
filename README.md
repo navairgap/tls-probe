@@ -47,3 +47,8 @@ MIT. See [LICENSE](LICENSE).
 ## Output compatibility
 
 Keep machine-readable output stable and send diagnostics to stderr. Distinguish connection failures from certificate-validation failures, represent unavailable values explicitly, and keep certificate validation enabled by default.
+
+
+## Maintenance and verification notes
+
+Document output compatibility: separate connection errors from certificate validation failures, keep stdout machine-readable, and leave certificate verification enabled by default.
