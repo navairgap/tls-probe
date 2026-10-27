@@ -25,6 +25,10 @@ This is the proposed machine-readable output contract. The probe remains design-
 }
 ```
 
+## Verification result semantics
+
+The JSON contract must separate certificate-chain trust from hostname verification. A valid chain for a different hostname is not a successful verification of the requested target. Report hostname matching independently (for example, `certificate.hostname_valid`) and define any aggregate `verified` value as true only when every verification check requested by the operator succeeds. Tests should include a trusted certificate with the wrong hostname, an expired certificate, and a self-signed certificate.
+
 ## Stability rules
 
 - Keep `schema_version` as an integer and increment it only for incompatible changes.
