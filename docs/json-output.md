@@ -38,6 +38,10 @@ The JSON contract must separate certificate-chain trust from hostname verificati
 - Errors should have a stable machine-readable `code` and a human-readable `message`; avoid embedding secrets or unbounded remote text.
 - Timestamps are UTC RFC 3339. Hostnames should be preserved as requested while connection addresses, if reported, remain separate fields.
 
+## Hostname, IP, and SNI handling
+
+Keep the requested target separate from the address actually connected to. For DNS names, send the requested hostname as SNI and verify the certificate against that hostname. For IP-literal targets, verify against the IP subject alternative name and do not invent a DNS SNI name. If a caller overrides SNI for diagnostics, report that override explicitly so output cannot be mistaken for normal hostname verification.
+
 ## Exit status proposal
 
 - `0`: handshake completed and no requested check failed.
